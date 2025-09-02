@@ -69,13 +69,14 @@ function loadContacts() {
     // - Falls null/undefined, dann exampleContacts verwenden
 
     // ✏️ DEINE LÖSUNG:
-    // const savedContacts = localStorage.getItem(___);
-    // if (savedContacts) {
-    //     contacts = JSON.parse(___);
-    // } else {
-    //     contacts = ___;
-    // }
+     const savedContacts = localStorage.getItem(contacts);
+     if (savedContacts) {
+         contacts = JSON.parse(savedContacts);
+     } else {
+        contacts = exampleContacts;
+     }
 
+     console.log(contacts);
     console.log("❌ TODO 1 noch nicht implementiert!");
 }
 
@@ -111,6 +112,32 @@ function displayContacts(contactsToShow = contacts) {
     // </div>
 
     // ✏️ DEINE LÖSUNG:
+    contactsList.innerHTML="";
+
+    contactsToShow.forEach(contact=>{
+    
+        const contactCard=`
+        <div class="contact-card">
+        <div class="contact-header">
+           <div>
+              <div class="contact-name2">${contact.name}</div>
+              <div class="contact-info">
+                <p>${contact.email}</p>
+                <p>${contact.phone||'Keine Nummer'}</p>
+               <p>${contact.company||'Keine Firma'}</p>
+             </div>
+           </div>
+           <div class="contact-actions">
+              <button class="btn btn-edit" data-id="ID">Bearbeiten</button>
+            <button class="btn btn-delete" data-id="ID">Löschen</button>
+          </div>
+        </div>
+       </div>
+ `;
+
+     contactsList.innerHTML+=contactCard;
+    
+    });
 
     console.log("❌ TODO 2 noch nicht implementiert!");
 
@@ -132,13 +159,13 @@ function createContact(contactData) {
     // - saveContacts(), displayContacts(), updateContactCount() aufrufen
 
     // ✏️ DEINE LÖSUNG:
-    // const newContact = {
-    //     id: ___,
-    //     name: contactData.___,
-    //     email: ___,
-    //     phone: ___,
-    //     company: ___
-    // };
+     const newContact = {
+         id: Date.now,
+         name: contactData.name,
+         email:contactData.email,
+         phone: contactData.phone,
+         company:contactData.company,
+     };
 
     console.log("❌ TODO 3 noch nicht implementiert!");
 }
@@ -157,6 +184,21 @@ function updateContact(id, contactData) {
     // - saveContacts(), displayContacts(), updateContactCount() aufrufen
 
     // ✏️ DEINE LÖSUNG:
+    const contact = contacts.find(contact=>contact.id==id);
+        if (contact){
+            contact.name=contactData.name;
+            contact.email=contactData.email;
+            contact.phne=contactData.phone;
+            contact.company=contactData.company;
+                 saveContacts();
+         displayContacts();
+         updateContactCount();
+         console.log("Kontakt aktualisieren.",contact.name);
+         }else{
+            console.log("Kontakt nicht gefunden mit ID:",id);
+        } 
+
+
 
     console.log("❌ TODO 4 noch nicht implementiert!");
 }
@@ -174,6 +216,8 @@ function deleteContact(id) {
     // - saveContacts(), displayContacts(), updateContactCount() aufrufen
 
     // ✏️ DEINE LÖSUNG:
+    const contactToDelete = contacts.find(contact=> contact-id==id);
+    const contactName = contactToDelete
 
     console.log("❌ TODO 5 noch nicht implementiert!");
 }
